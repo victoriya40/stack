@@ -1,0 +1,59 @@
+import java.util.*;
+public class Main{
+public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("ENTER INFIX EXPRESSION:");
+        String s=sc.nextLine();
+        char[] Stack=new char[s.length()];
+        int top=-1;
+        String postfix="";
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            if((ch>='A'&&ch<='Z')||(ch>='a'&&ch<='z')||(ch>='0'&&ch<='9')){
+                postfix=postfix+ch;
+               }
+            else if(ch=='('||ch=='['||ch=='{'){
+                top++;
+                Stack[top]=ch;
+            }
+            else if(ch==')'||ch==']'||ch=='}'){
+while(top>=0&&Stack[top]!='('&& Stack[top]!='['&&Stack[top]!='{'){
+                       postfix=postfix+Stack[top];
+                       top--;
+                      }
+                if(top>=0)
+                top--;
+            } else{
+                int precedenceop = 0;
+                if(ch=='+'||ch=='-')
+                precedenceop=1;
+                else if(ch=='*'||ch=='/')
+                precedenceop=2;
+                else if(ch=='^')
+                precedenceop=3;
+               while(top>=0){
+                    char t=Stack[top];
+                    int precedencetop=0;
+                    if(t=='+'||t=='-')
+                       precedencetop=1;
+                    else if(t=='*'||t=='/')
+                    precedencetop=2;
+                    else if(t=='^')
+                    precedencetop=3;
+                   if(precedencetop>precedenceop){
+                        postfix=postfix+Stack[top];
+                        top--;
+                    }else
+                        break;
+                }
+                top++;
+                Stack[top]=ch;
+            }
+        }
+        while(top>=0){
+            postfix=postfix+Stack[top];
+            top--;
+        }
+    System.out.println(postfix);
+    }
+}

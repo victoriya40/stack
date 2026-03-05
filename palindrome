@@ -1,0 +1,30 @@
+import java.util.Scanner;
+public class Main{
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+         String s=sc.nextLine().toLowerCase();
+        s=s.replaceAll("[^a-z0-9]","");
+        char[]stack=new char[s.length()];
+        int top=-1;
+        for(int i=0;i<s.length();i++){
+            char ch=s.charAt(i);
+            top++;
+            stack[top]=ch;
+        }
+        boolean isPalindrome=true;
+        for(int i=0;i<s.length();i++){
+            char originalChar=s.charAt(i);
+            char poppedChar=stack[top];
+            top--;
+            if(originalChar!=poppedChar){
+                isPalindrome=false;
+                break;
+            }
+        }
+        if(isPalindrome==true){
+            System.out.print("palindrome");
+        }else{
+            System.out.print("Not palindrome");
+        }
+}
+}
